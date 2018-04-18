@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  odp-hgs-mongo:
+    image: odp-hgs-mongo:latest
+    ports:
+       - "27017:27017"
+    restart: always
+    volumes:
+      - './publish/Databases/mongodb:/data/db'
+    environment:
+      - MONGODB_ENABLE_AUTH=yes
+      - MONGODB_ADMIN_USER=root
+      - MONGODB_ADMIN_PASS=rootPassXXX
+      - MONGODB_BIND_IP=0.0.0.0
+      - MONGODB_PORT=27017

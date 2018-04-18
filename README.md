@@ -1,35 +1,23 @@
-# docker-mongo-auth
-A Docker Image for MongoDB which makes it easy to create an Admin, a Database and a Database User when the container is first launched.
+# Customizable MongoDB (Docker)
 
-# Customization
-There are a number of environment variables which you can specify to customize the username and passwords of your users. 
+This project build a docker image for MongoDB with customizable settings like authentication, port and ip bind.
 
-- With Dockerfile
-  ```
-  // Auth Configuration.
-  // These environment variables can also be specified through command line or docker-compose configuration
-  # ENV AUTH yes
+You can clone the project and build a local image or find it on [Docker Cloud](https://cloud.docker.com/swarm/felipeap92/repository/docker/felipeap92/customizable-mongodb)
 
-  # ENV MONGODB_ADMIN_USER root
-  # ENV MONGODB_ADMIN_PASS password
-
-  # ENV MONGODB_APPLICATION_DATABASE your_db
-  # ENV MONGODB_APPLICATION_USER user
-  # ENV MONGODB_APPLICATION_PASS password
-  ```
+# Settings
+There are a number of optional environment variables which you can specify to customize your MongoDB container. 
   
 - With docker-compose.yml
   ```
   services:
     db:
-      image: aashreys/mongo-auth:latest
+      image: felipeap92/customizable-mongodb:latest
       environment:
-        - AUTH=yes
+        - MONGODB_ENABLE_AUTH=yes
         - MONGODB_ADMIN_USER=admin
-        - MONGODB_ADMIN_PASS=admin123
-        - MONGODB_APPLICATION_DATABASE=sample
-        - MONGODB_APPLICATION_USER=aashrey
-        - MONGODB_APPLICATION_PASS=admin123
+        - MONGODB_ADMIN_PASS=adminpass
+        - MONGODB_BIND_IP=0.0.0.0
+        - MONGODB_PORT=27017
       ports:
         - "27017:27017"
   // more configuration
@@ -38,13 +26,10 @@ There are a number of environment variables which you can specify to customize t
 - With command line
   ```
   docker run -it \
-    -e AUTH=yes \
+    -e MONGODB_ENABLE_AUTH=yes \
     -e MONGODB_ADMIN_USER=admin \
     -e MONGODB_ADMIN_PASS=adminpass \
-    -e MONGODB_APPLICATION_DATABASE=mytestdatabase \
-    -e MONGODB_APPLICATION_USER=testuser \
-    -e MONGODB_APPLICATION_PASS=testpass \
-    -p 27017:27017 aashreys/mongo-auth:latest
+    -e MONGODB_BIND_IP=0.0.0.0 \
+    -e MONGODB_PORT=27017 \
+    -p 27017:27017 felipeap92/customizable-mongodb:latest
   ```
-
-Find the image on Docker Cloud @ https://cloud.docker.com/swarm/aashreys/repository/docker/aashreys/mongo-auth
